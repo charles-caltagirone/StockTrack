@@ -21,6 +21,12 @@ class Produits
     #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'produit')]
     private Collection $categories;
 
+    #[ORM\Column(length: 255)]
+    private ?string $description = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $quantity = null;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -69,6 +75,30 @@ class Produits
         if ($this->categories->removeElement($category)) {
             $category->removeProduit($this);
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?string
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(string $quantity): static
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }
