@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProductsController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+<h1>Ajouter un produit :</h1><br>
+{# {{form(formProduit)}} #}
+{{form_start(formProduit)}}
+{{form_row(formProduit.name)}}
+{{form_row(formProduit.description)}}
+{{form_row(formProduit.quantity)}}
+{{ form_row(formProduit._token) }} {# This is the CSRF field #}
+{# {{form_row(formProduit.categories)}} #}
+{{form_row(formProduit.submit)}}
+{{ form_end(formProduit, {'render_rest': false}) }} {# This will prevent rendering of any other fields #}
+</div>
+<div>
+ <a href="{{ path('app_homepage') }}">
+    <button>
+        Revenir à l'accueil
+    </button>
+</a>
+</div>
+{% endblock %}
