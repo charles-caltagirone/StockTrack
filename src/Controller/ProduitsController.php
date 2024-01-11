@@ -33,8 +33,8 @@ class ProduitsController extends AbstractController
             $this->entityManager->persist($produit); // équivalent du prepare PDO
             $this->entityManager->flush(); // équivalent du execute PDO
             
-            // return $this->redirectToRoute('app_homepage');
-            return $this->redirect($request->getUri());
+            return $this->redirectToRoute('app_homepage');
+            // return $this->redirect($request->getUri());
         }
 
         return $this->render('produits/index.html.twig', [

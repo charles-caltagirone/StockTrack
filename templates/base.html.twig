@@ -28,6 +28,13 @@
             Aller vers les produits
             </button>
             </a>
+            <h2>Produits existants :</h2><br>
+            <p>Nom (et quantité) : <br>
+            {% for produit in produits %}
+            <p>{{produit.name}} (x
+            {{produit.quantity}})</p>
+            {% endfor %}
+            </p>            
             {% endblock %}
     </body>
 </html>
