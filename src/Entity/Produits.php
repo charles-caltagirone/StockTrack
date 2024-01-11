@@ -15,25 +15,22 @@ class Produits
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255)]
     private ?string $name = null;
-
-    #[ORM\ManyToMany(targetEntity: Category::class, mappedBy: 'produit')]
-    private Collection $categories;
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $quantity = null;
+    #[ORM\Column]
+    private ?int $quantity = null;
+
+    #[ORM\ManyToMany(targetEntity: Categories::class, inversedBy: 'id_category')]
+    private Collection $id_category;
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+        $this->id_category = new ArrayCollection();
     }
-
-    #[ORM\ManyToOne(inversedBy: 'produits')]
-    #[ORM\JoinColumn(nullable: false)]
 
     public function getId(): ?int
     {
@@ -45,36 +42,9 @@ class Produits
         return $this->name;
     }
 
-    public function setName(?string $name): static
+    public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Category>
-     */
-    public function getCategories(): Collection
-    {
-        return $this->categories;
-    }
-
-    public function addCategory(Category $category): static
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories->add($category);
-            $category->addProduit($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Category $category): static
-    {
-        if ($this->categories->removeElement($category)) {
-            $category->removeProduit($this);
-        }
 
         return $this;
     }
@@ -91,14 +61,38 @@ class Produits
         return $this;
     }
 
-    public function getQuantity(): ?string
+    public function getQuantity(): ?int
     {
         return $this->quantity;
     }
 
-    public function setQuantity(string $quantity): static
+    public function setQuantity(int $quantity): static
     {
         $this->quantity = $quantity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categories>
+     */
+    public function getIdCategory(): Collection
+    {
+        return $this->id_category;
+    }
+
+    public function addIdCategory(Categories $idCategory): static
+    {
+        if (!$this->id_category->contains($idCategory)) {
+            $this->id_category->add($idCategory);
+        }
+
+        return $this;
+    }
+
+    public function removeIdCategory(Categories $idCategory): static
+    {
+        $this->id_category->removeElement($idCategory);
 
         return $this;
     }

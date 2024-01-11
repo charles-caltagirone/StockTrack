@@ -16,7 +16,7 @@
 {{form_row(formProduit.description)}}
 {{form_row(formProduit.quantity)}}
 {{ form_row(formProduit._token) }} {# This is the CSRF field #}
-{# {{form_row(formProduit.categories)}} #}
+{{form_row(formProduit.id_category)}}
 {{form_row(formProduit.submit)}}
 {{ form_end(formProduit, {'render_rest': false}) }} {# This will prevent rendering of any other fields #}
 </div>

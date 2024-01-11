@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoryRepository;
+use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategoryRepository::class)]
-class Category
+#[ORM\Entity(repositoryClass: CategoriesRepository::class)]
+class Categories
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,12 +18,12 @@ class Category
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Produits::class, inversedBy: 'categories')]
-    private Collection $produit;
+    #[ORM\ManyToMany(targetEntity: Produits::class, mappedBy: 'id_category')]
+    private Collection $id_category;
 
     public function __construct()
     {
-        $this->produit = new ArrayCollection();
+        $this->id_category = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -46,23 +46,26 @@ class Category
     /**
      * @return Collection<int, Produits>
      */
-    public function getProduit(): Collection
+    public function getIdCategory(): Collection
     {
-        return $this->produit;
+        return $this->id_category;
     }
 
-    public function addProduit(Produits $produit): static
+    public function addIdCategory(Produits $idCategory): static
     {
-        if (!$this->produit->contains($produit)) {
-            $this->produit->add($produit);
+        if (!$this->id_category->contains($idCategory)) {
+            $this->id_category->add($idCategory);
+            $idCategory->addIdCategory($this);
         }
 
         return $this;
     }
 
-    public function removeProduit(Produits $produit): static
+    public function removeIdCategory(Produits $idCategory): static
     {
-        $this->produit->removeElement($produit);
+        if ($this->id_category->removeElement($idCategory)) {
+            $idCategory->removeIdCategory($this);
+        }
 
         return $this;
     }

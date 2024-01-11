@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Category;
+use App\Entity\Categories;
 use App\Entity\Produits;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -24,8 +24,8 @@ class AjoutProduitType extends AbstractType
             ])
             ->add('description')
             ->add('quantity')
-            ->add('categories', EntityType::class, [
-                'class' => Category::class,
+            ->add('id_category', EntityType::class, [
+                'class' => Categories::class,
 'choice_label' => 'id',
 'multiple' => true,
             ])
