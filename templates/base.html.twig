@@ -4,8 +4,8 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+		    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
+		    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -19,22 +19,51 @@
         {% endblock %}
     </head>
     <body>
-            {% block body %}
-            <h1>Titre Index</h1>
-            <p>BONJOUR</p>
-            <button id="button">Lancer un console log</button>
-            <a href="{{ path('app_produits') }}">
-            <button>
-            Aller vers les produits
-            </button>
-            </a>
-            <h2>Produits existants :</h2><br>
-            <p>Nom (et quantité) : <br>
-            {% for produit in produits %}
-            <p>{{produit.name}} (x
-            {{produit.quantity}})</p>
-            {% endfor %}
-            </p>            
-            {% endblock %}
+      <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{{ path ('app_homepage')}}">Accueil</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+           <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+           <div class="navbar-nav">
+             <a class="nav-link active" aria-current="page" href="{{ path ('app_produits')}}">Ajout produit</a>
+                      {% if app.user %}
+             <a class="nav-link" href="{{ path ('app_logout')}}">Déconnexion</a>
+                      {% else %}
+              <a class="nav-link" href="{{ path ('app_login')}}">Connexion</a>
+              <a class="nav-link" href="{{ path ('app_register')}}">Inscription</a>
+                      {% endif %}
+            </div>
+         </div>
+        </div>
+      </nav>
+    </header>
+      {% block body %}
+  <h1>Produits répertoriés :</h1>
+  <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Nom</th>
+      <th scope="col">Quantité</th>
+      <th scope="col">Catégorie(s)</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for produit in produits %}
+    <tr>
+      <td>{{produit.name}}</td>
+      <td>{{produit.quantity}}</td>
+      <td>
+      {% for produit in produit.getIdCategory() %}
+      {{produit.getName()}}
+      {% endfor %}
+      </td>
+    </tr>
+      {% endfor %}
+  </tbody>
+</table>
+      {% endblock %}
     </body>
 </html>

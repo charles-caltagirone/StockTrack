@@ -4,6 +4,9 @@ body{
 p{
     color: red;
 }
-body p{
-    color: red;
+body form{
+    width: 20%;
+}
+#ajout_produit_id_category{
+    width: 150%;
 }

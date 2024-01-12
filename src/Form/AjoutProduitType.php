@@ -26,8 +26,8 @@ class AjoutProduitType extends AbstractType
             ->add('quantity')
             ->add('id_category', EntityType::class, [
                 'class' => Categories::class,
-'choice_label' => 'id',
-'multiple' => true,
+                'choice_label' => 'name',
+                'multiple' => true,
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Valider',
